@@ -1,3 +1,5 @@
+using WebApi.Persistence;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -13,6 +15,7 @@ builder.Configuration
     .AddJsonFile("appsettings.json", optional: false) // Opsiyonel olmamasinin sebebi her turlu appsettings gorulmek istenebilir.
     .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true); // Opsiyonel olmasinin sebebi Development veya Production ortami olarak iki ayri ortam kullanilabilmesidir.
 
+builder.Services.AddPersistence(builder.Configuration);
 
 var app = builder.Build();
 
