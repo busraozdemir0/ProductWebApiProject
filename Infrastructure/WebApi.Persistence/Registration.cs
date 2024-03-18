@@ -19,6 +19,7 @@ namespace WebApi.Persistence
             services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>)); // Alanlar generic oldugunda typeof anahtar sozcugu kullanilir!!
+            services.AddScoped(typeof(IWriteRepository<>), typeof(WriteRepository<>)); 
         }
     }
 }
