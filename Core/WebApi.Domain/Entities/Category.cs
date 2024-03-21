@@ -23,6 +23,6 @@ namespace WebApi.Domain.Entities
         public string Name { get; set; }
         public int Priority { get; set; }
         public ICollection<Detail> Details { get; set; } // Detail tablosu ile Bire cok iliski
-        public ICollection<Product> Products { get; set; } // Product tablosu ile coka cok iliski => Migration olusturdugumuzda otomatik CategoryProduct adinda ortak tablo olusturur.
+        public ICollection<ProductCategory> ProductCategories { get; set; } // Product tablosu ile coka cok iliski => => ProductCategory adinda ortak bir tablo olusturuldu.
     }
 }
