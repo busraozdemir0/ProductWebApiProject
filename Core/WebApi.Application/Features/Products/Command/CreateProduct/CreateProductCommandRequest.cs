@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WebApi.Application.Features.Products.Command.CreateProduct
 {
-    public class CreateProductCommandRequest:IRequest
+    public class CreateProductCommandRequest:IRequest<Unit>   // Unit => Herhangi bir tip dondurmez. Void gibi calisir.
     {
         public string Title { get; set; }
         public string Description { get; set; }
