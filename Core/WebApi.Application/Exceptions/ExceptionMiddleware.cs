@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using SendGrid.Helpers.Errors.Model;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -31,6 +32,13 @@ namespace WebApi.Application.Exceptions
             int statusCode = GetStatusCode(exception); // Gelen exception'a gore StatusCode'u bulduk.
             httpContext.Response.ContentType = "application/json";
             httpContext.Response.StatusCode = statusCode;
+
+            if(exception.GetType() == typeof(ValidationException)) // exception'ın tipi ValidationException ise
+                return httpContext.Response.WriteAsync(new ExceptionModel
+                {
+                    Errors = ((ValidationException)exception).Errors.Select(x => x.ErrorMessage),   // exception türü ValidationException yapildi.
+                    StatusCode = StatusCodes.Status400BadRequest  // Eger validasyondan gecemediyse BadRequest donmeli
+                }.ToString());
 
             List<string> errors = new()
             {
