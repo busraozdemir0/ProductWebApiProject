@@ -26,6 +26,7 @@ namespace WebApi.Persistence
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+            // Identity yapilandirmasi
             services.AddIdentityCore<User>(opt=>
             {
                 opt.Password.RequireNonAlphanumeric = false; // Alfabetik deger girmedigimizde veren hatayi devre disi birakiyoruz

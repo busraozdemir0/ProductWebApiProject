@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using WebApi.Application.Interfaces.Tokens;
@@ -54,12 +55,36 @@ namespace WebApi.Infrastructure.Tokens
 
         public string GenerateRefreshToken()
         {
-            throw new NotImplementedException();
+            var randomNumber = new byte[64];
+            using var rng = RandomNumberGenerator.Create(); // Random numara uretiliyor.
+            rng.GetBytes(randomNumber);
+            return Convert.ToBase64String(randomNumber);  // 64 karakterlik refresh token uretiliyor
         }
 
-        public ClaimsPrincipal? GetPrincipalFromExpiredToken()
+        public ClaimsPrincipal? GetPrincipalFromExpiredToken(string? token)
         {
-            throw new NotImplementedException();
+            // Gelen token'i dogrularken asagida belirtilen alanlari ignore ettik.
+            TokenValidationParameters tokenValidationParameters = new()
+            {
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenSettings.Secret)),
+                ValidateLifetime = false
+            };
+
+            JwtSecurityTokenHandler tokenHandler = new();
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken securityToken); // out yardimiyla securityToken adinda SecurityToken döndürülüyor.
+
+            if (securityToken is not JwtSecurityToken jwtSecurityToken || 
+                !jwtSecurityToken.Header.Alg.
+                Equals(SecurityAlgorithms.HmacSha256, 
+                StringComparison.InvariantCultureIgnoreCase))
+            {
+                throw new SecurityTokenException("Token bulunamadı.");
+            }
+
+            return principal;
         }
     }
 }
