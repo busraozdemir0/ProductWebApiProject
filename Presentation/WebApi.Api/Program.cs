@@ -1,5 +1,6 @@
 using WebApi.Persistence;
 using WebApi.Application;
+using WebApi.Infrastructure;
 using WebApi.Mapper;
 using WebApi.Application.Exceptions;
 
@@ -11,7 +12,6 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddCustomMapper();
 
 var env = builder.Environment;
 builder.Configuration
@@ -20,10 +20,11 @@ builder.Configuration
     .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true); // Opsiyonel olmasinin sebebi Development veya Production ortami olarak iki ayri ortam kullanilabilmesidir.
 
 builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
+builder.Services.AddCustomMapper();
 
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
