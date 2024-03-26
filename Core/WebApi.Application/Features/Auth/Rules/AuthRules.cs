@@ -20,5 +20,16 @@ namespace WebApi.Application.Features.Auth.Rules
 
             return Task.CompletedTask;
         }
+
+        public Task EmailOrPasswordShouldNotBeInValid(User? user, bool checkPassword)
+        {
+            // Login islemi icin Email ve Password vt'deki ile uyusuyor mu diye bakacak uymuyorsa hata firlatacak.
+            
+            if (user is null || !checkPassword)
+                throw new EmailOrPasswordShouldNotBeInValidException();
+
+            return Task.CompletedTask;
+
+        }
     }
 }
