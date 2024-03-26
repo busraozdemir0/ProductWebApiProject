@@ -19,9 +19,5 @@
   <ItemGroup>
     <ProjectReference Include="..\WebApi.Domain\WebApi.Domain.csproj" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="Features\Auth\Queries\" />
-  </ItemGroup>
 
 </Project>
