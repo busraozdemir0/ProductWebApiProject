@@ -8,7 +8,7 @@ using WebApi.Application.Bases;
 namespace WebApi.Application.Features.Products.Exceptions
 {
     // Urun adları ayni olamaz. Bunun için kendimiz bir proje kuralı oluşturduk. ve custom exception'ımızı yazdik.
-    public class ProductTitleMustNotBeSameException:BaseExceptions
+    public class ProductTitleMustNotBeSameException:BaseException
     {
         public ProductTitleMustNotBeSameException():base("Ürün başlığı zaten var")
         {
