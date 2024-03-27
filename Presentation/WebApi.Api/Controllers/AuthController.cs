@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Application.Features.Auth.Command.Login;
+using WebApi.Application.Features.Auth.Command.RefreshToken;
 using WebApi.Application.Features.Auth.Command.Register;
 
 namespace WebApi.Api.Controllers
@@ -25,6 +26,13 @@ namespace WebApi.Api.Controllers
         }
         [HttpPost]
         public async Task<IActionResult> Login(LoginCommandRequest request)
+        {
+            var response = await mediator.Send(request);
+            return StatusCode(StatusCodes.Status200OK, response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RefreshToken(RefreshTokenCommandRequest request)
         {
             var response = await mediator.Send(request);
             return StatusCode(StatusCodes.Status200OK, response);
