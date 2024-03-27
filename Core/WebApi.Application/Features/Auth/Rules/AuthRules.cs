@@ -31,5 +31,16 @@ namespace WebApi.Application.Features.Auth.Rules
             return Task.CompletedTask;
 
         }
+
+        public Task RefreshTokenShouldNotBeExpired(DateTime? expiryDate)
+        {
+            // Login islemi icin Email ve Password vt'deki ile uyusuyor mu diye bakacak uymuyorsa hata firlatacak.
+
+            if (expiryDate <= DateTime.Now)
+                throw new RefreshTokenShouldNotBeExpiredException();
+
+            return Task.CompletedTask;
+
+        }
     }
 }
