@@ -31,6 +31,8 @@ namespace WebApi.Application
             ValidatorOptions.Global.LanguageManager.Culture = new CultureInfo("tr"); // Fluent Validation turkcelestirilmesi
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(FluentValidationBehaviour<,>));
+            
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RedisCacheBehaviour<,>));
         }
 
         private static IServiceCollection AddRulesFromAssemblyContaining

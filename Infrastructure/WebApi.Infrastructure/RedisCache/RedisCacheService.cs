@@ -10,6 +10,9 @@ using WebApi.Application.Interfaces.RedisCache;
 
 namespace WebApi.Infrastructure.RedisCache
 {
+    // Redis => anahtar-deger ciftlerini depolamak icin kullanilan bir veritabanidir.
+    //Redis, verileri hafizada saklar, bu da veri eisimini hizlandirir. 
+    //Redis genellikle önbellek(cache) çözümleri, oturum yonetimi gibi islemlerde kullanilir.
     public class RedisCacheService : IRedisCacheService
     {
         private readonly ConnectionMultiplexer redisConnection; // Redis kutuphanesi yardimiyla gelen ozellik
