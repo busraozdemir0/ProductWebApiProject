@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Application.Features.Brands.Commands.CreateBrand;
+using WebApi.Application.Features.Brands.Queries.GetAllBrands;
 using WebApi.Application.Features.Products.Command.CreateProduct;
 using WebApi.Application.Features.Products.Command.DeleteProduct;
 using WebApi.Application.Features.Products.Command.UpdateProduct;
@@ -47,6 +49,20 @@ namespace WebApi.Api.Controllers
         {
             await mediator.Send(request);
             return Ok();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateBrand(CreateBrandCommandRequest request)
+        {
+            await mediator.Send(request);
+            return Ok();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllBrands()
+        {
+            var response = await mediator.Send(new GetAllBrandsQueryRequest());
+            return Ok(response);
         }
     }
 }
