@@ -9,6 +9,6 @@ namespace WebApi.Application.Interfaces.RedisCache
     public interface ICacheableQuery
     {
         string CacheKey { get; }
-        double CacheTime { get; }
+        double CacheTime { get; } // On bellekte tutulacak sure
     }
 }

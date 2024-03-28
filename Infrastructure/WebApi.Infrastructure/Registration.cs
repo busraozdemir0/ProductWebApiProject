@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using WebApi.Application.Interfaces.Tokens;
 using WebApi.Infrastructure.Tokens;
 using Microsoft.IdentityModel.Tokens;
+using WebApi.Infrastructure.RedisCache;
+using WebApi.Application.Interfaces.RedisCache;
 
 namespace WebApi.Infrastructure
 {
@@ -20,6 +22,9 @@ namespace WebApi.Infrastructure
         {
             services.Configure<TokenSettings>(configuration.GetSection("JWT"));
             services.AddTransient<ITokenService, TokenService>();
+
+            services.Configure<RedisCacheSettings>(configuration.GetSection("RedisCacheSettings"));
+            services.AddTransient<IRedisCacheService, RedisCacheService>();
 
             services.AddAuthentication(opt =>
             {
@@ -40,6 +45,13 @@ namespace WebApi.Infrastructure
                     ValidAudience = configuration["JWT:Audience"],
                     ClockSkew = TimeSpan.Zero
                 };
+            });
+
+            // Redis baglantisi DI yardimiyla gerceklestirdik.
+            services.AddStackExchangeRedisCache(opt =>
+            {
+                opt.Configuration = configuration["RedisCacheSettings:ConnectionString"];
+                opt.InstanceName = configuration["RedisCacheSettings:InstanceName"];
             });
 
         }
